@@ -1,4 +1,9 @@
+
+Flask
 google-genai
 python-dotenv
 PyMuPDF
 python-docx
+Flask-Session
+gunicorn
+google-cloud-firestore

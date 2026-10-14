@@ -1,0 +1,13 @@
+
+.venv/
+__pycache__/
+*.pyc
+.env
+.git/
+.gitignore
+flask_session/
+results/
+documents/
+uploads/
+*.log
+application_default_credentials.json

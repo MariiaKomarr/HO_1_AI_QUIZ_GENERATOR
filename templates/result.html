@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результати тесту — AI Quiz Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff4fa, #f0eaff);
+            min-height: 100vh;
+            margin: 0;
+            padding: 35px 15px;
+            color: #654f73;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(120, 90, 150, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #9270b9;
+            margin: 25px 0;
+        }
+
+        .question {
+            padding: 20px;
+            border: 1px solid #eadcf4;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .question h3 {
+            line-height: 1.5;
+        }
+
+        .correct {
+            color: #31805a;
+        }
+
+        .incorrect {
+            color: #c35c70;
+        }
+
+        .explanation {
+            background: #f8f2ff;
+            padding: 14px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .ai-section {
+            margin-top: 35px;
+            padding: 25px;
+            border: 1px solid #d8c4ef;
+            border-radius: 15px;
+            background: #faf6ff;
+        }
+
+        .ai-section h2 {
+            margin-top: 0;
+            color: #8062a7;
+        }
+
+        .ai-content {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            background: #a88acb;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 30px;
+        }
+
+        .back:hover {
+            background: #9270b9;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .ai-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Результати тесту</h1>
+
+        <div class="score">
+            {{ correct_count }} / {{ total }} — {{ percentage }}%
+        </div>
+
+        {% for result in results %}
+
+        <div class="question">
+
+            <h3>{{ result.number }}. {{ result.question }}</h3>
+
+            {% if result.is_correct %}
+                <p class="correct">✓ Правильна відповідь</p>
+            {% else %}
+                <p class="incorrect">✗ Неправильна відповідь</p>
+            {% endif %}
+
+            <p>
+                <strong>Твоя відповідь:</strong>
+                {% if result.selected %}
+                    {{ result.selected }}.
+                    {{ result.options[result.selected] }}
+                {% else %}
+                    Не обрано
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Правильна відповідь:</strong>
+                {{ result.correct }}.
+                {{ result.options[result.correct] }}
+            </p>
+
+            <div class="explanation">
+                <strong>Пояснення:</strong>
+                {{ result.explanation }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="ai-section">
+            <h2>✨ Рекомендації від Gemini AI</h2>
+
+            <div class="ai-content">{{ ai_analysis }}</div>
+        </div>
+
+        <a href="{{ url_for('home') }}" class="back">
+            Пройти новий тест
+        </a>
+
+    </div>
+</body>
+</html>

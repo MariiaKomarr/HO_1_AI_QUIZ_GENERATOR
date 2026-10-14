@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff4fa, #f0eaff);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 440px;
+            max-width: 85%;
+            box-shadow: 0 10px 35px rgba(120, 90, 150, 0.12);
+            text-align: center;
+        }
+
+        h1 { color: #654f73; }
+        p { color: #8b7697; }
+
+        input, button {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+
+        input { border: 1px solid #eadcf4; }
+
+        button {
+            background: #a88acb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover { background: #9270b9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Quiz Generator</h1>
+        <p>Створюй тести з навчальних матеріалів за допомогою Gemini AI</p>
+
+        <form action="/generate" method="POST" enctype="multipart/form-data">
+            <input type="file" name="document" accept=".pdf,.docx,.txt" required>
+            <input type="number" name="num_questions"
+                   min="1" max="30" value="5" required>
+            <button type="submit">Згенерувати тест</button>
+        </form>
+    </div>
+</body>
+</html>

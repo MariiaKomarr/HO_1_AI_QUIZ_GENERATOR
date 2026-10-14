@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Історія тестувань — AI Quiz Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff4fa, #f0eaff);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 15px;
+            color: #654f73;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(120, 90, 150, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f8f2ff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 27px;
+            font-weight: bold;
+            color: #9270b9;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #8b7697;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #eadcf4;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f2ff;
+        }
+
+        .percentage {
+            font-weight: bold;
+            color: #9270b9;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #8b7697;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            background: #a88acb;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 30px;
+        }
+
+        .back:hover {
+            background: #9270b9;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            th, td {
+                padding: 9px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Історія тестувань</h1>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">{{ total_tests }}</div>
+                <div class="stat-label">Пройдено тестів</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value">{{ average }}%</div>
+                <div class="stat-label">Середній результат</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value">{{ best }}%</div>
+                <div class="stat-label">Найкращий результат</div>
+            </div>
+        </div>
+
+        {% if history %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Документ</th>
+                    <th>Результат</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.date.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ item.document }}</td>
+                    <td class="percentage">
+                        {{ "%.2f"|format(item.percentage) }}%
+                        ({{ item.correct }}/{{ item.total }})
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty">
+            Історія тестувань поки порожня.
+        </div>
+        {% endif %}
+
+        <a href="{{ url_for('home') }}" class="back">
+            ← Повернутися на головну
+        </a>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Згенерований тест — AI Quiz Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff4fa, #f0eaff);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 15px;
+            color: #654f73;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(120, 90, 150, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8b7697;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #eadcf4;
+            border-radius: 12px;
+        }
+
+        .question h3 {
+            margin-top: 0;
+            line-height: 1.5;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #f0e8f5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option:hover {
+            background: #f8f2ff;
+        }
+
+        .option:has(input:checked) {
+            background: #f2e9ff;
+            border-color: #a88acb;
+        }
+
+        .option input {
+            margin-top: 3px;
+            accent-color: #a88acb;
+        }
+
+        .option span {
+            line-height: 1.5;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: #a88acb;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+
+        .submit-btn:hover {
+            background: #9270b9;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            color: #8b7697;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Згенерований тест</h1>
+
+        <p class="subtitle">
+            Обери одну правильну відповідь для кожного запитання
+        </p>
+
+        <form action="{{ url_for('submit_quiz') }}" method="POST">
+
+            {% for question in questions %}
+
+            {% set question_number = loop.index %}
+
+            <div class="question">
+
+                <h3>
+                    {{ question_number }}. {{ question.question }}
+                </h3>
+
+                {% for key, value in question.options.items() %}
+
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="question_{{ question_number }}"
+                        value="{{ key }}"
+                        required
+                    >
+
+                    <span>
+                        <strong>{{ key }}.</strong> {{ value }}
+                    </span>
+                </label>
+
+                {% endfor %}
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">
+                Завершити тест
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('home') }}" class="back">
+            ← Повернутися на головну
+        </a>
+
+    </div>
+</body>
+</html>
